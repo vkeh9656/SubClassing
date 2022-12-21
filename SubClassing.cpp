@@ -36,7 +36,8 @@ CSubClassingApp theApp;
 // CSubClassingApp 초기화
 
 BOOL CSubClassingApp::InitInstance()
-{	
+{
+	
 	CWinApp::InitInstance();
 
 	CSubClassingDlg dlg;

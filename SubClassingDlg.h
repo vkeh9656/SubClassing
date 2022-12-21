@@ -3,11 +3,14 @@
 //
 
 #pragma once
-
+#include "MyButton.h"
 
 // CSubClassingDlg 대화 상자
 class CSubClassingDlg : public CDialogEx
 {
+private:
+	MyButton m_plus_btn, m_minus_btn;
+
 // 생성입니다.
 public:
 	CSubClassingDlg(CWnd* pParent = nullptr);	// 표준 생성자입니다.
@@ -30,4 +33,8 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnBnClickedPlusBtn();
+	afx_msg void OnBnClickedMinusBtn();
+	virtual BOOL OnCommand(WPARAM wParam, LPARAM lParam);
 };

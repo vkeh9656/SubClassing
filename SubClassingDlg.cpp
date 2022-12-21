@@ -31,6 +31,8 @@ void CSubClassingDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CSubClassingDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDC_PLUS_BTN, &CSubClassingDlg::OnBnClickedPlusBtn)
+	ON_BN_CLICKED(IDC_MINUS_BTN, &CSubClassingDlg::OnBnClickedMinusBtn)
 END_MESSAGE_MAP()
 
 
@@ -45,8 +47,9 @@ BOOL CSubClassingDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// 큰 아이콘을 설정합니다.
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
-	// TODO: 여기에 추가 초기화 작업을 추가합니다.
-
+	SetDlgItemInt(IDC_VALUE_EDIT, 0);
+	m_plus_btn.SubclassDlgItem(IDC_PLUS_BTN, this);
+	m_minus_btn.SubclassDlgItem(IDC_MINUS_BTN, this);
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
 
@@ -86,3 +89,33 @@ HCURSOR CSubClassingDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void CSubClassingDlg::OnBnClickedPlusBtn()
+{
+	int value = GetDlgItemInt(IDC_VALUE_EDIT);
+	SetDlgItemInt(IDC_VALUE_EDIT, value + 1);
+}
+
+
+void CSubClassingDlg::OnBnClickedMinusBtn()
+{
+	int value = GetDlgItemInt(IDC_VALUE_EDIT);
+	SetDlgItemInt(IDC_VALUE_EDIT, value - 1);
+}
+
+
+BOOL CSubClassingDlg::OnCommand(WPARAM wParam, LPARAM lParam)
+{
+	if (HIWORD(wParam) == 20000)
+	{
+		int value = GetDlgItemInt(IDC_VALUE_EDIT);
+
+		if (LOWORD(wParam) == IDC_PLUS_BTN) value++;
+		else value--;
+
+		SetDlgItemInt(IDC_VALUE_EDIT, value);
+	}
+
+	return CDialogEx::OnCommand(wParam, lParam);
+}
